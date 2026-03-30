@@ -1,41 +1,129 @@
-# Kailyn Ziroli 
-# Matchmaker Lite 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matchmaker 2026</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 50px auto;
+            width: 350px;
+            border-radius: 10px;
+        }
+        input {
+            margin: 5px;
+            padding: 5px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
 
-print("")
-print("Matchmaker 2026")
-print("")
-print("[[Please answer the following questions on a scale on 1-5. 5 being you agree with the statement and 1 being you don't. You will get the total number of compatability at the end.]]")
-print("")
+<body>
 
-userResponse1 = int(input("Chicago Sports Teams are the Best"))
-desiredResponse1 = 5
-compatability1 = 5 - abs(userResponse1 - desiredResponse1)
-print("Question 1 compatability " + str(compatability1))
-print("")
+<div class="box">
+    <h2>Matchmaker 2026</h2>
 
-userResponse2 = int(input("The Best thing to eat for breakfast is scrambled eggs"))
-desiredResponse2 = 2
-compatability2 = 5 - abs(userResponse2 - desiredResponse2)
-print("Question 2 compatability " + str(compatability2))
-print("")
+    <p>
+        Please answer each question from 1–5.<br>
+        5 = strongly agree, 1 = strongly disagree.
+    </p>
 
-userResponse3 = int(input("I love to do activities outside"))
-desiredResponse3 = 5
-compatability3 = 5 - abs(userResponse3 - desiredResponse3)
-print("Question 3 compatability " + str(compatability3))
-print("")
+    <input id="q1" placeholder="Chicago Sports Teams are the Best"><br>
+    <input id="q2" placeholder="Best breakfast is scrambled eggs"><br>
+    <input id="q3" placeholder="I love outdoor activities"><br>
+    <input id="q4" placeholder="I like to travel"><br>
+    <input id="q5" placeholder="Pineapple on pizza?"><br>
 
-userResponse4 = int(input("I like to travel"))
-desiredResponse4 = 4
-compatability4 = 5 - abs(userResponse4 - desiredResponse4)
-print("Question 4 compatability " + str(compatability4))
-print("")
+    <button onclick="calculate()">Submit</button>
 
-userResponse5 = int(input("Pineapple on Pizza?"))
-desiredResponse5 = 1
-compatability5 = 5 - abs(userResponse5 - desiredResponse5)
-print("Question 5 compatability " + str(compatability5))
-print("")
+    <pre id="output"></pre>
+</div>
 
-Totalcompatibility = (compatability1 + compatability2 + compatability3 + compatability4 + compatability5) * 25
-print("Total Compatibility" + str(Totalcompatibility))
+<script>
+// constants (Requirement 4)
+const MAX_SCORE = 5;
+
+// validate function
+function validate(value) {
+    if (value === "" || isNaN(value) || value < 1 || value > 5) {
+        return false;
+    }
+    return true;
+}
+
+function calculate() {
+
+    let userResponse1 = document.getElementById("q1").value;
+    let userResponse2 = document.getElementById("q2").value;
+    let userResponse3 = document.getElementById("q3").value;
+    let userResponse4 = document.getElementById("q4").value;
+    let userResponse5 = document.getElementById("q5").value;
+
+    let responses = [userResponse1, userResponse2, userResponse3, userResponse4, userResponse5];
+
+    // validate all inputs
+    for (let i = 0; i < responses.length; i++) {
+        if (!validate(responses[i])) {
+            document.getElementById("output").innerText =
+                "❌ Please enter numbers between 1 and 5 for all questions.";
+            return;
+        }
+    }
+
+    // convert to numbers
+    userResponse1 = Number(userResponse1);
+    userResponse2 = Number(userResponse2);
+    userResponse3 = Number(userResponse3);
+    userResponse4 = Number(userResponse4);
+    userResponse5 = Number(userResponse5);
+
+    // your SAME logic
+    let desiredResponse1 = 5;
+    let compatability1 = 5 - Math.abs(userResponse1 - desiredResponse1);
+
+    let desiredResponse2 = 2;
+    let compatability2 = 5 - Math.abs(userResponse2 - desiredResponse2);
+
+    let desiredResponse3 = 5;
+    let compatability3 = 5 - Math.abs(userResponse3 - desiredResponse3);
+
+    let desiredResponse4 = 4;
+    let compatability4 = 5 - Math.abs(userResponse4 - desiredResponse4);
+
+    let desiredResponse5 = 1;
+    let compatability5 = 5 - Math.abs(userResponse5 - desiredResponse5);
+
+    let totalCompatibility = 
+        (compatability1 + compatability2 + compatability3 + compatability4 + compatability5) * 25;
+
+    let resultText =
+        "Question 1 compatibility: " + compatability1 + "\n" +
+        "Question 2 compatibility: " + compatability2 + "\n" +
+        "Question 3 compatibility: " + compatability3 + "\n" +
+        "Question 4 compatibility: " + compatability4 + "\n" +
+        "Question 5 compatibility: " + compatability5 + "\n\n" +
+        "Total Compatibility: " + totalCompatibility + "%\n";
+
+    // closing remark (Requirement 3)
+    if (totalCompatibility > 80) {
+        resultText += "🔥 You are highly compatible!";
+    } else if (totalCompatibility > 50) {
+        resultText += "😊 You are somewhat compatible.";
+    } else {
+        resultText += "😬 Not very compatible.";
+    }
+
+    document.getElementById("output").innerText = resultText;
+}
+</script>
+
+</body>
+</html>
